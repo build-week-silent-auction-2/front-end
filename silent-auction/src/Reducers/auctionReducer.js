@@ -16,11 +16,13 @@ export const reducer = (state=initialState, action) => {
         case auctionActions.FETCH_AUCTION_SUCCESS:
             return {
                 ...state,
+                loading: false,
                 auctions: action.payload
             }
         case auctionActions.FETCH_AUCTION_ERROR:
             return {
                 ...state,
+                loading: false,
                 error: action.payload
             }
         default: 
