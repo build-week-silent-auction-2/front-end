@@ -22,7 +22,6 @@ const Signup = (props) => {
         seller: false
     });
 
-    const [success, setSuccess] = useState();
     const [error, setError] = useState();
 
     const handleChange = (e) => {
@@ -31,15 +30,19 @@ const Signup = (props) => {
             [e.target.name]: e.target.value
         })
     }
+    const handleCheckbox = (e) => {
+        setUser({
+            ...user,
+            seller: !user.seller
+        })
+    }
     const handleSubmit = (e) => {
         e.preventDefault();
         api().post('/auth/register', user)
             .then(res => {
-                console.log(res);
-                setSuccess('User successfully created');
-                setTimeout(() => {
-                    props.history.push('/')
-                }, 500)
+                localStorage.setItem('token', res.data.token);
+                props.history.push('/Home')
+
             })
             .catch(err => {
                 setError('Could not create user')
@@ -54,11 +57,11 @@ const Signup = (props) => {
                     <input type="password" placeholder="Password" name="password" value={user.password} onChange={handleChange} />
                     <input type="text" placeholder="First Name" name="first_name" value={user.first_name} onChange={handleChange} />
                     <input type="text" placeholder="Last name" name="last_name" value={user.last_name} onChange={handleChange} />
-                    <input type="checkbox" checked={user.seller} name="seller" value={user.seller} onChange={handleChange} />
+                    <label htmlFor="seller">Seller? </label>
+                    <input type="checkbox" checked={user.seller} name="seller" value={user.seller} onChange={handleCheckbox} />
 
                     <button type="submit">Register</button>
                 </form>
-                {success && <span className={classes.success}>{success} </span>}
                 {error && <span className={classes.error}>{error} </span>}
             </div>
         </div>
