@@ -4,13 +4,13 @@ const api = () => {
     return axios.create({
         baseURL: 'https://silent-auction-bw.herokuapp.com/api',
         headers: {
-            token: getToken()
+            authorization: getToken()
         }
     })
 };
 
 export const getToken = () => {
-    return localStorage.get('token');
+    return localStorage.getItem('token');
 };
 
 export default api;

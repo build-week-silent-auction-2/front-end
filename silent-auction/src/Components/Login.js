@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import api from '../utils/api';
-import makeStyles from '@material-ui/core/styles';
+import api from '../Utils/api';
+import {makeStyles} from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -34,10 +34,9 @@ const Login = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        api().get('/auth/login')
+        api().post('/auth/login', user)
             .then(res => {
-                console.log(res)
-                // localStorage.setItem('token', res.data)
+                localStorage.setItem('token', res.data.token)
                 props.history.push('/Home')
             })
             .catch(err => setError("Invalid Username or Password"))
@@ -45,7 +44,7 @@ const Login = (props) => {
 
     return (
         <div className={classes.wrapper}>
-            <div className={form-wrapper}>
+            <div className={classes.form}>
                 <form onSubmit={handleSubmit}>
                     {error && <span className={classes.error}>{error}</span>}
 
