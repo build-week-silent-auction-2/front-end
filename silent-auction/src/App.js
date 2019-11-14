@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
 import Login from './Components/Login';
-import Signup from './Components/SIgnup';
+import Signup from './Components/Signup';
 import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {

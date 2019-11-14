@@ -48,13 +48,13 @@ const Signup = (props) => {
 
     return (
         <div className={classes.wrapper}>
-            <div className={classes.form-wrapper}>
+            <div className={classes.form}>
                 <form onSubmit={handleSubmit}>
                     <input type="text" placeholder="Username" name="username" value={user.username} onChange={handleChange} />
-                    <input type="text" placeholder="Password" name="password" value={user.password} onChange={handleChange} />
+                    <input type="password" placeholder="Password" name="password" value={user.password} onChange={handleChange} />
                     <input type="text" placeholder="First Name" name="first_name" value={user.first_name} onChange={handleChange} />
-                    <input type="text" placeholder="Last name" name="username" value={user.last_name} onChange={handleChange} />
-                    <input type="checkbox" placeholder="Seller" name="seller" value={user.seller} onChange={handleChange} />
+                    <input type="text" placeholder="Last name" name="last_name" value={user.last_name} onChange={handleChange} />
+                    <input type="checkbox" checked={user.seller} name="seller" value={user.seller} onChange={handleChange} />
 
                     <button type="submit">Register</button>
                 </form>
