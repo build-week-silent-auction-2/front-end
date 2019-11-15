@@ -26,7 +26,7 @@ const Home = (props) => {
 
             {/* testing if we are getting our props */}
             {props.auctions && !props.loading && props.auctions.map ((cur, index) => (
-                <Auctions key={index} name={cur.name} seller={cur.seller} image={cur.image} description={cur.description} date_ending={cur.date_ending} current_price={cur.current_price} />
+                <Auctions key={index} id={cur.id} name={cur.name} seller={cur.seller} image={cur.image} description={cur.description} date_ending={cur.date_ending} current_price={cur.current_price} />
             ))}
 
             
