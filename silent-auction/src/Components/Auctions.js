@@ -1,12 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
     wrapper: {
         display: 'flex',
         flexFlow: 'row wrap',
-        textAlign: 'left',
-        marginBottom: '20px',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     img: {
         width: '50%',
@@ -16,6 +17,21 @@ const useStyles = makeStyles({
     },
     imgTag: {
         width: '35%',
+    },
+    link: {
+        textDecoration: 'none',
+        color: 'black',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    auctionWrapper: {
+        display: 'flex',
+        flexFlow: 'row wrap',
+        border: '1px solid black',
+        padding: '20px',
+        margin: '20px 0',
+        width: '70%',
     }
 })
 
@@ -23,15 +39,19 @@ const Auctions = (props) => {
     const classes = useStyles();
     return (
         <div className={classes.wrapper}>
-            <div className={classes.img}>
-                <img className={classes.imgTag} src={props.image} alt={props.name} />
-            </div>
-            <div className={classes.texts}>
-                <h2>{props.name}</h2>
-                {/* <p>{props.description}</p> */}
-                <span>Ending On: {props.date_ending}</span>
-                <p>Current Bid: {props.current_price} </p>
-                <p>Sold By: {props.seller} </p>
+            <div className={classes.auctionWrapper}>
+                <Link to={`/auctions/${props.id}`} className={classes.link}>
+                    <div className={classes.img}>
+                        <img className={classes.imgTag} src={props.image} alt={props.name} />
+                    </div>
+                    <div className={classes.texts}>
+                        <h2>{props.name}</h2>
+                        {/* <p>{props.description}</p> */}
+                        <span>Ending On: {props.date_ending}</span>
+                        <p>Current Bid: {props.current_price} </p>
+                        <p>Sold By: {props.seller} </p>
+                    </div>
+                </Link>
             </div>
         </div>
     )

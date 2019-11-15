@@ -9,10 +9,40 @@ const useStyles = makeStyles({
         flexFlow: 'column wrap',
         alignItems: 'center',
         justifyContent: 'center',
-
+        width: '100%',
+        height: '100vh'
     },
     error: {
         color: 'red',
+    },
+    formWrapper: {
+        display: 'flex',
+        flexFlow: 'column wrap',
+        borderRight: '2px solid gray',
+        borderLeft: '2px solid gray',
+        borderBottom: '3px solid black',
+        justifyContent: 'space-between',
+        minWidth: '500px',
+        minHeight: '300px',
+    },
+    form: {
+        display: 'flex',
+        flexFlow: 'column wrap',
+        alignItems: 'center',
+    },
+    header: {
+        background: 'rgb(13, 42, 70)',
+        color: 'white',
+        top: '0',
+        width: '100%',
+    },
+    formInputs: {
+        margin: '20px 0',
+        padding: '7px 10px',
+        textAlign: 'center'
+    },
+    button: {
+        
     }
 })
 
@@ -51,19 +81,24 @@ const Login = (props) => {
 
     return (
         <div className={classes.wrapper}>
-            {spinner ? <div className="spinner" /> : (
-            <div className={classes.form}>
-                <form onSubmit={handleSubmit}>
-                    {error && <span className={classes.error}>{error}</span>}
-                    
-                    <input type="text" placeholder="Username" name="username" value={user.username} onChange={handleChange} />
-                    <input type="password" placeholder="Password" name="password" value={user.password} onChange={handleChange} />
 
-                    <button type="submit">Login</button>
-                </form>
+            <div className={classes.formWrapper}>
+                <div className={classes.header}>
+                    <h2>Silent Auction</h2>
+                </div>
+                {spinner ? <div className="spinner" /> : (
+                    <form onSubmit={handleSubmit} className={classes.form}>
+                        {error && <span className={classes.error}>{error}</span>}
+                        
+                        <input className={classes.formInputs} type="text" placeholder="Username" name="username" value={user.username} onChange={handleChange} />
+                        <input className={classes.formInputs} type="password" placeholder="Password" name="password" value={user.password} onChange={handleChange} />
+
+                        <button className={classes.button} type="submit">Login</button>
+                    </form>
+                )}
                 <p>Don't have an account? <Link to="/Signup">Sign up!</Link></p>
             </div>
-            )}
+        
         </div>
     )
 }

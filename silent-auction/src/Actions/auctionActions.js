@@ -15,6 +15,11 @@ export const EDIT_AUCTION_ERROR = "EDIT_AUCTION_ERROR";
 export const ADD_AUCTION = "ADD_AUCTION";
 export const ADD_AUCTION_ERROR = "ADD_AUCTION_ERROR";
 
+export const FETCH_AUCTION_BY_ID_START = "FETCH_AUCTION_BY_ID_START";
+export const FETCH_AUCTION_BY_ID_SUCCESS = "FETCH_AUCTION_BY_ID_SUCCESS";
+export const FETCH_AUCTION_BY_ID_ERROR = "FETCH_AUCTION_BY_ID_ERROR";
+
+
 
 
 
@@ -44,7 +49,18 @@ export const editAuction = (id, item) => dispatch => {
         .then(res => {
             dispatch({ type: EDIT_AUCTION, })
         })
-}
+};
+
+export const fetchAuctionById = (id) => dispatch => {
+    dispatch({ type: FETCH_AUCTION_BY_ID_START })
+    api().get(`/auctions/${id}`)
+        .then(res => {
+            dispatch({ type: FETCH_AUCTION_BY_ID_SUCCESS, payload: res.data })
+        })
+        .catch(err => {
+            dispatch({ type: FETCH_AUCTION_BY_ID_ERROR, payload: err })
+        })
+};
 
 
 

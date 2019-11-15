@@ -3,7 +3,9 @@ import * as auctionActions from '../Actions/auctionActions';
 const initialState = {
     auctions: [],
     loading: false,
-    error: ''
+    error: '',
+    auction: {},
+
 };
 
 export const reducer = (state=initialState, action) => {
@@ -20,6 +22,23 @@ export const reducer = (state=initialState, action) => {
                 auctions: action.payload
             }
         case auctionActions.FETCH_AUCTION_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        case auctionActions.FETCH_AUCTION_BY_ID_START:
+            return {
+                ...state,
+                loading: true
+            }
+        case auctionActions.FETCH_AUCTION_BY_ID_SUCCESS:
+            return {
+                ...state,
+                auction: action.payload,
+                loading: false
+            }
+        case auctionActions.FETCH_AUCTION_BY_ID_ERROR:
             return {
                 ...state,
                 loading: false,
