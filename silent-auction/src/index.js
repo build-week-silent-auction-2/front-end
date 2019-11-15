@@ -7,12 +7,14 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {reducer as bidReducer } from './Reducers/bidReducer';
 import { reducer as auctionReducer } from './Reducers/auctionReducer';
+import { reducer as userReducer } from './Reducers/UserReducer';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 const rootReducer = combineReducers({
     auction: auctionReducer,
     bid: bidReducer,
+    user: userReducer,
 })
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
