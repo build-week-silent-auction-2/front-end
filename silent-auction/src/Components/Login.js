@@ -5,12 +5,7 @@ import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
     wrapper: {
-        display: 'flex',
-        flexFlow: 'column wrap',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100vh'
+
     },
     error: {
         color: 'red',
@@ -20,10 +15,13 @@ const useStyles = makeStyles({
         flexFlow: 'column wrap',
         borderRight: '2px solid gray',
         borderLeft: '2px solid gray',
-        borderBottom: '3px solid black',
+        borderBottom: '2px solid gray',
         justifyContent: 'space-between',
-        minWidth: '500px',
+        alignItems: 'center',
+        minWidth: '450px',
         minHeight: '300px',
+        width: '30%',
+        background: 'white',
     },
     form: {
         display: 'flex',
@@ -31,18 +29,38 @@ const useStyles = makeStyles({
         alignItems: 'center',
     },
     header: {
-        background: 'rgb(13, 42, 70)',
-        color: 'white',
-        top: '0',
         width: '100%',
     },
     formInputs: {
         margin: '20px 0',
-        padding: '7px 10px',
-        textAlign: 'center'
+        padding: '15px 40px',
+        textAlign: 'center',
+        borderRadius: '25px',
+        fontSize: '1.5rem',
+        border: '1px solid lightgray',
+        background: '#F2F2F2'
     },
     button: {
-        
+        borderRadius: '25px',
+        background: 'rgb(13,42,70)',
+        color: 'white',
+        padding: '15px 40px',
+        border: 'none',
+        fontSize: '1.2rem',
+        '&:hover': {
+            background: '#D5DFE5',
+            color: '#253A4B',
+        }
+    },
+    img: {
+        width: '100%',
+    },
+    link: {
+        textDecoration: 'none',
+        color: '#89566A',
+        '&:hover': {
+            color: 'rgb(13, 42, 70)',
+        }
     }
 })
 
@@ -80,12 +98,12 @@ const Login = (props) => {
     }
 
     return (
-        <div className={classes.wrapper}>
+        <div className='wrapper'>
 
             <div className={classes.formWrapper}>
-                <div className={classes.header}>
-                    <h2>Silent Auction</h2>
-                </div>
+                {/* <div className={classes.header}> */}
+                    <img className={classes.img} src={require('../Assets/SIlent-auction.png')} />
+                {/* </div> */}
                 {spinner ? <div className="spinner" /> : (
                     <form onSubmit={handleSubmit} className={classes.form}>
                         {error && <span className={classes.error}>{error}</span>}
@@ -96,7 +114,7 @@ const Login = (props) => {
                         <button className={classes.button} type="submit">Login</button>
                     </form>
                 )}
-                <p>Don't have an account? <Link to="/Signup">Sign up!</Link></p>
+                <p>Don't have an account? <Link className={classes.link} to="/Signup">Sign up!</Link></p>
             </div>
         
         </div>

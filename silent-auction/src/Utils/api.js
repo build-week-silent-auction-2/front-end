@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = () => {
     return axios.create({
-        baseURL: 'https://silent-auction-2.herokuapp.com/api',
+        baseURL: 'https://protected-brushlands-21901.herokuapp.com/api',
         headers: {
             authorization: getToken()
         }
