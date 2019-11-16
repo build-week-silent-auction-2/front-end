@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = () => {
     return axios.create({
-        baseURL: 'https://protected-brushlands-21901.herokuapp.com/api',
+        baseURL: 'https://rocky-wave-68014.herokuapp.com/api',
         headers: {
             authorization: getToken()
         }
