@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import api from '../Utils/api';
-import Items from './AddAuctionCard';
+import { connect } from 'react-redux';
+import { addAuction } from '../Actions/auctionActions';
 
 // Labels needed for form
-    // 1. Name
+    // 1. name
     // 2. starting_price
     // 3. date_starting
     // 4. date_ending
@@ -11,21 +11,45 @@ import Items from './AddAuctionCard';
     // 6. image
 
 const AddAuction = (props) => {
-    const [item, setItem] = useState({ title: "", body: "" });
+    const [item, setItem] = useState({
+        name: '',
+        starting_price: '',
+        date_starting: '',
+        date_ending: '',
+        description: '',
+        image: ''
+    });
 
     const handleChanges = e => {
-        console.log(note);
         setItem({ ...item, [e.target.name]: e.target.value });
     };
 
     const submitForm = e => {
         e.preventDefault();
-        props.addNewNote(item);
-        setItem({ title: "", body: "" });
+
+        //makes a post request to the api and gives it our item object
+        props.addAuction(item)
+
+        setItem({
+            name: '',
+            starting_price: '',
+            date_starting: '',
+            date_ending: '',
+            description: '',
+            image: ''
+        });
     };
     
     
     return (
+
+        // input name needs to match the key in the item object, we get the names from the api's docs, they need to match or they will get rejected by api, for example: 
+        
+        // <label htmlFor="starting_price">Starting Price</label>
+        // <input type="number" name="starting_price" placeholder="Starting Price" value={item.starting_price} onChange={handleChanges} />
+
+
+
         <form onSubmit={submitForm}>
             <label> Add Item Form </label>
             <input
@@ -75,4 +99,8 @@ const AddAuction = (props) => {
     )
 }
 
-export default AddAuction;
+const mapDispatchToProps = {
+    addAuction
+}
+
+export default connect([], mapDispatchToProps)(AddAuction);
