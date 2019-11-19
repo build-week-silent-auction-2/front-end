@@ -6,6 +6,7 @@ import Signup from './Components/Signup';
 import ProtectedRoute from './Components/ProtectedRoute';
 import Home from './Components/Home';
 import Auction from './Components/Auction';
+import AddAuction from './Components/AddAuction';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route exact path="/Signup" component={Signup} />
       <ProtectedRoute exact path="/Home" component={Home} />
       <ProtectedRoute exact path="/auctions/:id" component={Auction} />
+      <ProtectedRoute exact path="/addAuction" component={AddAuction} />
     </div>
   );
 }
