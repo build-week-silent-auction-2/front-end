@@ -21,7 +21,7 @@ const Home = (props) => {
         props.fetchAuctions();
         props.fetchUser();
     }, [])
-
+    
     return (
         <div className={classes.wrapper}>
 

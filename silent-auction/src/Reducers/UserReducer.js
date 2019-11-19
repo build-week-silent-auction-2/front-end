@@ -12,9 +12,6 @@ export const reducer = (state=initialState, action) => {
             return {
                 ...state,
                 loading: true,
-                
-                // re-initializing user as an empty object to clean up previous fetches
-                user: {}
             }
         case userActions.FETCH_USER_SUCCESS:
             return {
@@ -27,9 +24,6 @@ export const reducer = (state=initialState, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
-
-                // re-initializing user as an empty object to clean up previous fetches
-                user: {}
             }
         default: 
             return state;

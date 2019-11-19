@@ -6,7 +6,7 @@ export const FETCH_USER_ERROR = "FETCH_USER_ERROR";
 
 export const fetchUser = () => dispatch => {
     dispatch({ type: FETCH_USER_START })
-    api().get(`/users`)
+    api().get(`/auth`)
         .then(res => {
             dispatch({ type: FETCH_USER_SUCCESS, payload: res.data })
         })
