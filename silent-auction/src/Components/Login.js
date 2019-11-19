@@ -22,6 +22,7 @@ const useStyles = makeStyles({
         minHeight: '300px',
         width: '30%',
         background: 'white',
+        maxWidth: '600px',
     },
     form: {
         display: 'flex',
