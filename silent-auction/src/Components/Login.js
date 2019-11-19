@@ -89,7 +89,7 @@ const Login = (props) => {
             .then(res => {
                 setSpinner(!spinner)
                 localStorage.setItem('token', res.data.token)
-                props.history.push('/Home')
+                props.history.push('/')
             })
             .catch(err => {
                 console.log(err)

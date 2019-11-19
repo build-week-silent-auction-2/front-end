@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../Utils/api';
 import Items from './AddAuctionCard';
 
-// Lables needed for form
+// Labels needed for form
     // 1. Name
     // 2. starting_price
     // 3. date_starting

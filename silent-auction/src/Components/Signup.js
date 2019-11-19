@@ -41,7 +41,7 @@ const Signup = (props) => {
         api().post('/auth/register', user)
             .then(res => {
                 localStorage.setItem('token', res.data.token);
-                props.history.push('/Home')
+                props.history.push('/')
 
             })
             .catch(err => {

@@ -1,10 +1,18 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+    wrapper: {
+        display: 'none',
+    }
+
+})
 
 const NavBar = (props) => {
-
+    const classes=useStyles();
     return (
-        <nav>
-            <h1>Silent Auction</h1>
+        <nav className={classes.wrapper}>
+
         </nav>
     )
 }

@@ -8,7 +8,7 @@ const ProtectedRoute = (props) => {
         ...rest
     } = props;
     return (
-        <Route {...rest} render={(renderProps) => getToken() ? <Component {...renderProps} /> : <Redirect to="/" />} />
+        <Route {...rest} render={(renderProps) => getToken() ? <Component {...renderProps} /> : <Redirect to="/Login" />} />
     )
 }
 
