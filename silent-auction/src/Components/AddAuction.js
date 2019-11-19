@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import api from '../Utils/api';
-import Items from './AddAuctionCard';
+import { connect } from 'react-redux';
+import { addAuction } from '../Actions/auctionActions';
 
 // Lables needed for form
-    // 1. Name
+    // 1. name
     // 2. starting_price
     // 3. date_starting
     // 4. date_ending
@@ -11,7 +11,14 @@ import Items from './AddAuctionCard';
     // 6. image
 
 const AddAuction = (props) => {
-    const [item, setItem] = useState({ title: "", body: "" });
+        const [item, setItem] = useState({
+        name: '',
+        starting_price: '',
+        date_starting: '',
+        date_ending: '',
+        description: '',
+        image: '',
+    })
 
     const handleChanges = e => {
         console.log(note);
@@ -20,13 +27,26 @@ const AddAuction = (props) => {
 
     const submitForm = e => {
         e.preventDefault();
-        props.addNewNote(item);
-        setItem({ title: "", body: "" });
+        props.addAuction(item);
+        setItem({
+            name: '',
+            starting_price: '',
+            date_starting: '',
+            date_ending: '',
+            description: '',
+            image: '',
+        })
     };
     
     
     return (
         <form onSubmit={submitForm}>
+
+            {/* you want the input name to match what I put in the object, they need to match or the api won't accept it */}
+            {/* here's an example input */}
+            {/*<label htmlFor="starting_price">Starting Price: </label>
+            <input type="number" placeholder="Starting Price" name="starting_price" value={item.starting_price} onChange={handleChanges} /> */}
+
             <label> Add Item Form </label>
             <input
                 id="name"
@@ -65,8 +85,7 @@ const AddAuction = (props) => {
 
         <   label htmlFor="note">Description</label>
             <textarea
-                id="note"
-                name="body"
+                name="description"
                 onChange={handleChanges}
                 value={item.body}
             />
@@ -75,4 +94,9 @@ const AddAuction = (props) => {
     )
 }
 
-export default AddAuction;
+//connect addAuction action to props
+const mapDispatchToProps = {
+    addAuction
+}
+
+export default connect([], mapDispatchToProps)(AddAuction);
