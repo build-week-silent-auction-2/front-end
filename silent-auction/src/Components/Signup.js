@@ -33,7 +33,7 @@ const Signup = (props) => {
     const handleCheckbox = (e) => {
         setUser({
             ...user,
-            seller: !user.seller
+            is_seller: !user.is_seller
         })
     }
     const handleSubmit = (e) => {
@@ -58,7 +58,7 @@ const Signup = (props) => {
                     <input type="text" placeholder="First Name" name="first_name" value={user.first_name} onChange={handleChange} />
                     <input type="text" placeholder="Last name" name="last_name" value={user.last_name} onChange={handleChange} />
                     <label htmlFor="seller">Seller? </label>
-                    <input type="checkbox" checked={user.seller} name="seller" value={user.seller} onChange={handleCheckbox} />
+                    <input type="checkbox" checked={user.is_seller} name="seller" value={user.is_seller} onChange={handleCheckbox} />
 
                     <button type="submit">Register</button>
                 </form>
