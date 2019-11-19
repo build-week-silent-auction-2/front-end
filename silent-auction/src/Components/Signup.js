@@ -19,7 +19,7 @@ const Signup = (props) => {
         password: '',
         first_name: '',
         last_name: '',
-        seller: false
+        is_seller: false
     });
 
     const [error, setError] = useState();
