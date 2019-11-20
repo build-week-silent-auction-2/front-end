@@ -32,6 +32,9 @@ const useStyles = makeStyles({
         padding: '20px',
         margin: '20px 0',
         width: '70%',
+        '&:hover': {
+            background: '#f2f2f2',
+        }
     }
 })
 

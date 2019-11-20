@@ -11,7 +11,24 @@ const useStyles = makeStyles({
         display: 'flex',
         flexFlow: 'column wrap',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+    },
+    link: {
+        textDecoration: 'none',
+        borderRadius: '5px',
+        border: '1px solid #101434',
+        padding: '10px 20px',
+        color: 'white',
+        background: '#101434',
+        '&:hover': {
+            background: '#f2f2f2',
+            color: '#101434',
+        },
+        '&:focus': {
+            background: 'white',
+            color: '#101434',
+        },
+
     }
 })
 
@@ -26,7 +43,8 @@ const Home = (props) => {
         <div className={classes.wrapper}>
 
             {/*grab user info, if user is seller then display button */}
-            {props.user && props.user.role === "seller" && <Link to="/addAuction"> Add New Auction</Link>}
+            {props.user && props.user.role === "seller" && <Link className={classes.link} to="/addAuction"> Add New Auction</Link>}
+            <Link className={classes.link} to="/addAuction"> Add New Auction</Link>
 
             {/* testing spinner animation */}
             {props.loading && <div className="spinner" /> }
