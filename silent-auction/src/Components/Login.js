@@ -18,7 +18,7 @@ const useStyles = makeStyles({
         borderBottom: '2px solid gray',
         justifyContent: 'space-between',
         alignItems: 'center',
-        minWidth: '350px',
+        minWidth: '250px',
         minHeight: '300px',
         // width: '30%',
         background: 'white',
@@ -34,12 +34,17 @@ const useStyles = makeStyles({
     },
     formInputs: {
         margin: '20px 0',
+        width: '70%',
         padding: '15px 40px',
         textAlign: 'center',
         borderRadius: '25px',
         fontSize: '1.5rem',
         border: '1px solid lightgray',
-        background: '#F2F2F2'
+        background: '#F2F2F2',
+        '&:focus': {
+            border: '1px solid blue'
+        }
+
     },
     button: {
         borderRadius: '25px',
@@ -51,6 +56,10 @@ const useStyles = makeStyles({
         '&:hover': {
             background: '#D5DFE5',
             color: '#253A4B',
+        },
+        '&:focus': {
+            background: '#D5DFE5',
+            color: '#253A4B',
         }
     },
     img: {
@@ -60,6 +69,9 @@ const useStyles = makeStyles({
         textDecoration: 'none',
         color: '#89566A',
         '&:hover': {
+            color: 'rgb(13, 42, 70)',
+        },
+        '&:focus': {
             color: 'rgb(13, 42, 70)',
         }
     }
