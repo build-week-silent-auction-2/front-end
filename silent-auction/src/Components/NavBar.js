@@ -1,9 +1,8 @@
-import React, {useState } from 'react';
+import React, {useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import ClearIcon from '@material-ui/icons/Clear';
 import { Link } from 'react-router-dom';
+import { useOnClickOutside } from '../Utils/navHook';
 
 const useStyles = makeStyles({
     wrapper: {
@@ -53,17 +52,16 @@ const useStyles = makeStyles({
         flexFlow: 'column wrap',
         alignItems: 'center',
         justifyContent: 'space-between',
-        zIndex: '1',
+        zIndex: '2',
     },
     link: {
         textDecoration: 'none',
         fontSize: '1.4rem',
         color: 'black',
         '&:hover': {
-            color: '#101434'
+            color: 'white'
         }
     },
-
 
 })
 
@@ -77,15 +75,24 @@ const NavBar = (props) => {
     const handleLogout = () => {
         localStorage.removeItem('token');
     }
+
+    //closes nav if you click outside of it
+    const node = useRef();
+    useOnClickOutside(node, () => setOpen(false));
+
     return (
-        <nav className={classes.wrapper}>
-            <div className={classes.nav}>
-                <button onClick={handleOpen} className={open ? `${classes.menuToggle} ${classes.closeButton}` : classes.menuToggle}> {open ? <ClearIcon fontSize="large" /> : <MenuIcon fontSize="large" />}</button>
-            </div>
-            {open && <div className={classes.menuWrapper}>
-                    <Link className={classes.link} onClick={handleLogout} to="/login">Logout</Link>
-                </div>}
-        </nav>
+        <div className={classes.wrapper} ref={node}>
+                {/* hamburger menu */}
+            <button onClick={handleOpen}className="styledButton">
+                <div className={open ? "openFirstDiv" : "firstDiv"} />
+                <div className={open ? "openSecondDiv" : "secondDiv"} />
+                <div className={open ? "openThirdDiv" : "thirdDiv" }/>
+            </button>
+            {/* menu open */}
+            <nav className={open ? "navMenu" : "navMenuClosed"}>
+                <Link className={classes.link} onClick={handleLogout} to="/login">Logout</Link>
+            </nav>
+        </div>
     )
 }
 
