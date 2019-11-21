@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <Route exact path="/Login" component={Login} />
       <Route exact path="/Signup" component={Signup} />
-      <ProtectedRoute path="/" component={NavBar} />
+      <ProtectedRoute exact path="/" component={NavBar} />
       <ProtectedRoute exact path="/" component={Home} />
       <ProtectedRoute exact path="/auctions/:id" component={Auction} />
       <ProtectedRoute exact path="/addAuction" component={AddAuction} />
