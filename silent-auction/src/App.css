@@ -172,6 +172,7 @@
   font-weight: bold;
   letter-spacing: 0.5rem;
   text-decoration: none;
+  margin: 20px;
   transition: color 0.3 linear;
 }
 

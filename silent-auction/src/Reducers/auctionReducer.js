@@ -44,6 +44,17 @@ export const reducer = (state=initialState, action) => {
                 loading: false,
                 error: action.payload
             }
+        case auctionActions.EDIT_AUCTION:
+            return {
+                ...state,
+                auction: action.payload
+            }
+        case auctionActions.EDIT_AUCTION_ERROR:
+            return {
+                ...state,
+                error: action.payload
+            }
+
         default: 
             return state;
     }
