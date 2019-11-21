@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { fetchAuctionById } from '../Actions/auctionActions';
+import { addBid, deleteBid, editBid } from '../Actions/bidActions'
+
 
 const useStyles = makeStyles({
     imgTag: {
@@ -19,6 +21,21 @@ const useStyles = makeStyles({
 
 const Auction = (props) => {
     const classes = useStyles();
+    const [ bid,setBid ] = useState(); 
+    const handleChange = (e) => {
+        setBid (e.target.value) 
+    }
+    const handleDelete = () => {
+        props.deleteBid(props.bid_id)
+    }
+    const handleEdit = () => {
+        props.editBid(props.bid_id, bid)
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        props.addBid(props.match.params.id, bid);   
+    }
+    console.log(bid);
     useEffect(() => {
         props.fetchAuctionById(props.match.params.id);
     }, [])
@@ -34,6 +51,8 @@ const Auction = (props) => {
                         <p>{props.auction.description}</p>
                         <span>Ending On: {props.auction.date_ending}</span>
                         <p>Starting Price: {props.auction.starting_price} </p>
+                        <form onSubmit = { handleSubmit } > <input type = "number" placeholder = "Add Bid" value = {bid} onChange = { handleChange } /><button type = "submit">New Bid</button></form>
+                    <button onClick = { handleEdit }>Edit Bid</button><button onClick = { handleDelete }>Delete Bid</button>
                         <p>Bids: </p>{props.auction.bids && props.auction.bids.map((cur, index) => {
                             return <p key={index}>User: {cur.username} Bid: {cur.price}</p>
                         })}
@@ -48,12 +67,13 @@ const Auction = (props) => {
 const mapStateToProps = (state) => {
     return {
         auction: state.auction.auction,
-        loading: state.auction.loading
+        loading: state.auction.loading,
+        bid_id: state.bid.bid_id
     }
 }
 
 const mapDispatchToProps = {
-    fetchAuctionById
+    fetchAuctionById, addBid, deleteBid, editBid
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auction);
