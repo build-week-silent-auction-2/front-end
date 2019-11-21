@@ -44,7 +44,6 @@ const Home = (props) => {
 
             {/*grab user info, if user is seller then display button */}
             {props.user && props.user.role === "seller" && <Link className={classes.link} to="/addAuction"> Add New Auction</Link>}
-            <Link className={classes.link} to="/addAuction"> Add New Auction</Link>
 
             {/* testing spinner animation */}
             {props.loading && <div className="spinner" /> }

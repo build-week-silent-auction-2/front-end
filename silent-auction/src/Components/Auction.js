@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { fetchAuctionById } from '../Actions/auctionActions';
+import { fetchAuctionById, editAuction, deleteAuction } from '../Actions/auctionActions';
+import { fetchUser } from '../Actions/UserAction';
 import { addBid, deleteBid, editBid } from '../Actions/bidActions'
+import api from '../Utils/api';
 
 
 const useStyles = makeStyles({
@@ -16,29 +18,75 @@ const useStyles = makeStyles({
     auctionWrapper: {
         display: 'flex',
         flexFlow: 'row wrap',
+    },
+    form: {
+        display: 'flex',
+        flexFlow: 'column wrap',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 })
 
 const Auction = (props) => {
     const classes = useStyles();
     const [ bid,setBid ] = useState(); 
-    const handleChange = (e) => {
-        setBid (e.target.value) 
+    const [editOpen, setEditOpen] = useState(false);
+    const [auction, setAuction] = useState({
+        name: '',
+        starting_price: '',
+        date_starting: '',
+        date_ending: '',
+        description: '',
+        image: ''
+    });
+    const [error, setError] = useState();
+
+    const handleBid = (e) => {
+        setBid (e.target.value);
     }
     const handleDelete = () => {
-        props.deleteBid(props.bid_id)
+        props.deleteBid(props.bid_id);
     }
     const handleEdit = () => {
-        props.editBid(props.bid_id, bid)
+        props.editBid(props.bid_id, bid);
     }
     const handleSubmit = (e) => {
         e.preventDefault();
         props.addBid(props.match.params.id, bid);   
     }
-    console.log(bid);
+
+    const handleEditAuction = (e) => {
+        setEditOpen(!editOpen);
+    }
+
+    const handleDeleteAuction = () => {
+        api().delete(`/auctions/${props.match.params.id}`)
+            .then(res => {
+                props.history.push('/')
+            })
+            .catch(err => {
+                setError('Could not delete auction')
+            })
+    }
+
+    const handleSubmitAuction = (e) => {
+        e.preventDefault();
+        props.editAuction(props.match.params.id, auction);
+    }
+
+    const handleChange = (e) => {
+        setAuction({
+            ...auction,
+            [e.target.name]: e.target.value
+        })
+    }
+
     useEffect(() => {
         props.fetchAuctionById(props.match.params.id);
-    }, [])
+        if (!props.user.role) {
+            props.fetchUser();
+        }
+    }, [props.bid_id])
     return (
         <div className={classes.wrapper}>
             {props.loading ? <div className="spinner" /> : (
@@ -51,14 +99,63 @@ const Auction = (props) => {
                         <p>{props.auction.description}</p>
                         <span>Ending On: {props.auction.date_ending}</span>
                         <p>Starting Price: {props.auction.starting_price} </p>
-                        <form onSubmit = { handleSubmit } > <input type = "number" placeholder = "Add Bid" value = {bid} onChange = { handleChange } /><button type = "submit">New Bid</button></form>
-                    <button onClick = { handleEdit }>Edit Bid</button><button onClick = { handleDelete }>Delete Bid</button>
+                        {props.user && props.user.role === "buyer" && (
+                            <div>
+                                <form onSubmit = { handleSubmit } >
+                                    <input type = "number" placeholder = "Add Bid" value = {bid} onChange = { handleBid } />
+                                    <button type = "submit">New Bid</button>
+                                </form>
+                                <button onClick = { handleEdit }>Edit Bid</button><button onClick = { handleDelete }>Delete Bid</button>
+                            </div>
+                        )}
                         <p>Bids: </p>{props.auction.bids && props.auction.bids.map((cur, index) => {
                             return <p key={index}>User: {cur.username} Bid: {cur.price}</p>
                         })}
                         <p>Sold By: {props.auction.seller} </p>
                     </div>
                 </div>
+            )}
+            {props.user && props.user.role === "seller" && (
+                <div className={classes.buttonDiv}>
+                    <button onClick={handleEditAuction}>Edit </button>
+                    <button onClick={handleDeleteAuction}> Delete</button>
+                </div>
+            )}
+
+            {editOpen && (
+                <form className={classes.form} onSubmit={handleSubmitAuction}>
+                    <div>
+                        <label htmlFor="name">Name: </label>
+                        <input type="text" name="name" placeholder="Name" value={auction.name} onChange={handleChange} />
+                    </div>
+                    
+                    <div>
+                        <label htmlFor="starting_price">Starting Price: </label>
+                        <input type="number" name="starting_price" placeholder="Starting Price" value={auction.starting_price} onChange={handleChange} />
+                    </div>
+
+                    <div>
+                        <label htmlFor="date_starting">Start Date: </label>
+                        <input type="date" name="date_starting" placeholder="Start Date" value={auction.date_starting} onChange={handleChange} />
+                    </div>
+
+                    <div>
+                        <label htmlFor="date_ending">End Date: </label>
+                        <input type="date" name="date_ending" placeholder="End Date" value={auction.date_ending} onChange={handleChange} />
+                    </div>
+
+                    <div>
+                        <label htmlFor="description">Description: </label>
+                        <input type="text" name="description" placeholder="Description" value={auction.description} onChange={handleChange} />
+                    </div>
+
+                    <div>
+                        <label htmlFor="image">Image URL</label>
+                        <input type="text" name="image" placeholder="Image URL" value={auction.image} onChange={handleChange} />
+                    </div>
+
+                    <button type="submit">Edit Auction</button>
+                </form>
             )}
         </div>
     )
@@ -68,12 +165,18 @@ const mapStateToProps = (state) => {
     return {
         auction: state.auction.auction,
         loading: state.auction.loading,
-        bid_id: state.bid.bid_id
+        bid_id: state.bid.bid_id,
+        user: state.user.user
     }
 }
 
 const mapDispatchToProps = {
-    fetchAuctionById, addBid, deleteBid, editBid
+    fetchAuctionById, 
+    addBid, 
+    deleteBid, 
+    editBid,
+    fetchUser,
+    editAuction,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auction);

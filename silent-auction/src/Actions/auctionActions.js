@@ -47,9 +47,22 @@ export const addAuction = (item) => dispatch => {
 export const editAuction = (id, item) => dispatch => {
     api().put(`/auctions/${id}`, item)
         .then(res => {
-            dispatch({ type: EDIT_AUCTION, })
+            dispatch({ type: EDIT_AUCTION, payload: item })
+        })
+        .catch(err => {
+            dispatch({ type: EDIT_AUCTION_ERROR, payload: err })
         })
 };
+
+// export const deleteAuction = (id) => dispatch => {
+//     api().delete(`/auctions/${id}`)
+//         .then(res => {
+//             dispatch({ type: DELETE_AUCTION, payload: "Successfully deleted auction "})
+//         })
+//         .catch(err => {
+//             dispatch({ type: DELETE_AUCTION_ERROR, payload: err })
+//         })
+// };
 
 export const fetchAuctionById = (id) => dispatch => {
     dispatch({ type: FETCH_AUCTION_BY_ID_START })

@@ -80,20 +80,25 @@ const NavBar = (props) => {
     const node = useRef();
     useOnClickOutside(node, () => setOpen(false));
 
-    return (
-        <div className={classes.wrapper} ref={node}>
-                {/* hamburger menu */}
-            <button onClick={handleOpen}className="styledButton">
-                <div className={open ? "openFirstDiv" : "firstDiv"} />
-                <div className={open ? "openSecondDiv" : "secondDiv"} />
-                <div className={open ? "openThirdDiv" : "thirdDiv" }/>
-            </button>
-            {/* menu open */}
-            <nav className={open ? "navMenu" : "navMenuClosed"}>
-                <Link className={classes.link} onClick={handleLogout} to="/login">Logout</Link>
-            </nav>
-        </div>
-    )
+    if (props.location.pathname === '/Login') {
+        return null;
+    } else {
+        return (
+            <div className={classes.wrapper} ref={node}>
+                    {/* hamburger menu */}
+                <button onClick={handleOpen}className="styledButton">
+                    <div className={open ? "openFirstDiv" : "firstDiv"} />
+                    <div className={open ? "openSecondDiv" : "secondDiv"} />
+                    <div className={open ? "openThirdDiv" : "thirdDiv" }/>
+                </button>
+                {/* menu open */}
+                <nav className={open ? "navMenu" : "navMenuClosed"}>
+                    <Link className={classes.link} to="/">Home</Link>
+                    <Link className={classes.link} onClick={handleLogout} to="/login">Logout</Link>
+                </nav>
+            </div>
+        )
+    }
 }
 
 const mapStateToProps = state => {
