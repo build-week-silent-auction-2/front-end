@@ -114,6 +114,14 @@ const Auction = (props) => {
     const handleSubmitAuction = (e) => {
         e.preventDefault();
         props.editAuction(props.match.params.id, auction);
+        setAuction({
+            name: '',
+            starting_price: '',
+            date_starting: '',
+            date_ending: '',
+            description: '',
+            image: ''
+        })
     }
 
     const handleChange = (e) => {
