@@ -78,7 +78,7 @@
 
 .styledButton {
   position: absolute;
-  top: 5%;
+  top: 20%;
   right: 2rem;
   display: flex;
   flex-direction: column;
@@ -150,7 +150,7 @@
   flex-direction: column;
   justify-content: center;
   background: #3C658C;
-  height: 93vh;
+  height: 100vh;
   text-align: center;
   padding: 2rem;
   position: absolute;

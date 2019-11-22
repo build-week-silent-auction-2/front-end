@@ -5,6 +5,7 @@ import { fetchAuctionById, editAuction, deleteAuction } from '../Actions/auction
 import { fetchUser } from '../Actions/UserAction';
 import { addBid, deleteBid, editBid } from '../Actions/bidActions'
 import api from '../Utils/api';
+import useDate from '../Utils/useDate';
 
 
 const useStyles = makeStyles({
@@ -14,6 +15,7 @@ const useStyles = makeStyles({
     wrapper: {
         display:'flex',
         flexFlow: 'column wrap',
+        fontSize: '1rem'
     },
     auctionWrapper: {
         display: 'flex',
@@ -38,6 +40,7 @@ const useStyles = makeStyles({
         '&:hover': {
             background: '#1D4062',
             color: 'white',
+            cursor: 'pointer'
         }
     },
     deleteButton: {
@@ -50,13 +53,21 @@ const useStyles = makeStyles({
         '&:hover': {
             background: 'red',
             color: 'white',
+            cursor: 'pointer'
         }
+    },
+    formInput: {
+        padding: '10px 0',
+        fontSize: '1rem',
+        margin: '10px',
     }
 })
 
 const Auction = (props) => {
     const classes = useStyles();
-    const [ bid,setBid ] = useState(); 
+    const [ bid,setBid ] = useState({
+        price: ''
+    }); 
     const [editOpen, setEditOpen] = useState(false);
     const [auction, setAuction] = useState({
         name: '',
@@ -66,10 +77,14 @@ const Auction = (props) => {
         description: '',
         image: ''
     });
+    
+    const date = useDate(props.auction.date_ending);
     const [error, setError] = useState();
 
     const handleBid = (e) => {
-        setBid (e.target.value);
+        setBid({
+            price: e.target.value
+        })
     }
     const handleDelete = () => {
         props.deleteBid(props.bid_id);
@@ -99,6 +114,14 @@ const Auction = (props) => {
     const handleSubmitAuction = (e) => {
         e.preventDefault();
         props.editAuction(props.match.params.id, auction);
+        setAuction({
+            name: '',
+            starting_price: '',
+            date_starting: '',
+            date_ending: '',
+            description: '',
+            image: ''
+        })
     }
 
     const handleChange = (e) => {
@@ -114,6 +137,7 @@ const Auction = (props) => {
             props.fetchUser();
         }
     }, [props.bid_id])
+
     return (
         <div className={classes.wrapper}>
             {props.loading ? <div className="spinner" /> : (
@@ -124,15 +148,16 @@ const Auction = (props) => {
                     <div className={classes.texts}>
                         <h2>{props.auction.name}</h2>
                         <p>{props.auction.description}</p>
-                        <span>Ending On: {props.auction.date_ending}</span>
+                        <span>Ending On: {date}</span>
                         <p>Starting Price: {props.auction.starting_price} </p>
                         {props.user && props.user.role === "buyer" && (
                             <div>
                                 <form onSubmit = { handleSubmit } >
-                                    <input type = "number" placeholder = "Add Bid" value = {bid} onChange = { handleBid } />
-                                    <button type = "submit">New Bid</button>
+                                    <input className={classes.formInput}type = "number" placeholder = "Add Bid" value = {bid.price} onChange = { handleBid } />
+                                    <button className={classes.editButton}  type = "submit">New Bid</button>
                                 </form>
-                                <button onClick = { handleEdit }>Edit Bid</button><button onClick = { handleDelete }>Delete Bid</button>
+                                <button className={classes.editButton} onClick = { handleEdit }>Edit Bid</button>
+                                <button className={classes.deleteButton} onClick = { handleDelete }>Delete Bid</button>
                             </div>
                         )}
                         <p>Bids: </p>{props.auction.bids && props.auction.bids.map((cur, index) => {

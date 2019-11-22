@@ -36,7 +36,10 @@ const Home = (props) => {
     const classes= useStyles();
     useEffect(() => {
         props.fetchAuctions();
-        props.fetchUser();
+
+        if(!props.user.role) {
+            props.fetchUser();
+        }
     }, [])
     
     return (

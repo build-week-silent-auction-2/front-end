@@ -5,6 +5,8 @@ export const DELETE_BID = "DELETE_BID";
 export const DELETE_BID_ERROR = "DELETE_BID_ERROR";
 export const EDIT_BID = "EDIT_BID";
 export const EDIT_BID_ERROR = "EDIT_BID_ERROR";
+
+
 export const addBid = (id, price) => dispatch => {
     api().post(`/bids/${id}`, price)
         .then(res => {
@@ -14,6 +16,7 @@ export const addBid = (id, price) => dispatch => {
             dispatch({ type: ADD_BID_ERROR, payload: err })
         })
 };
+
 export const deleteBid = (id) => dispatch => {
     api().delete(`/bids/${id}`) 
         .then(res => {
@@ -23,6 +26,7 @@ export const deleteBid = (id) => dispatch => {
             dispatch({ type: DELETE_BID_ERROR, payload: "Could not delete bid" })
         })
 };
+
 export const editBid = (id, price) => dispatch => {
     api().put(`/bids/${id}`, price)
         .then(res => {

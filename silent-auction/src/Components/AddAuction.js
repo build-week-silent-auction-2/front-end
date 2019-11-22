@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { addAuction } from '../Actions/auctionActions';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+    wrapper: {
+        
+    },
+    form: {
+
+    }
+})
 
 // Labels needed for form
     // 1. name
@@ -11,7 +21,9 @@ import { addAuction } from '../Actions/auctionActions';
     // 6. image
 
 const AddAuction = (props) => {
-    const [item, setItem] = useState({
+    const classes = useStyles();
+
+    const [auction, setAuction] = useState({
         name: '',
         starting_price: '',
         date_starting: '',
@@ -20,17 +32,17 @@ const AddAuction = (props) => {
         image: ''
     });
 
-    const handleChanges = e => {
-        setItem({ ...item, [e.target.name]: e.target.value });
+    const handleChange = e => {
+        setAuction({ ...auction, [e.target.name]: e.target.value });
     };
 
-    const submitForm = e => {
+    const handleSubmit = e => {
         e.preventDefault();
 
         //makes a post request to the api and gives it our item object
-        props.addAuction(item)
+        props.addAuction(auction)
 
-        setItem({
+        setAuction({
             name: '',
             starting_price: '',
             date_starting: '',
@@ -42,60 +54,42 @@ const AddAuction = (props) => {
     
     
     return (
+        <div className={classes.wrapper}>
+            <form className={classes.form} onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="name">Name: </label>
+                    <input type="text" name="name" placeholder="Name" value={auction.name} onChange={handleChange} />
+                </div>
+                
+                <div>
+                    <label htmlFor="starting_price">Starting Price: </label>
+                    <input type="number" name="starting_price" placeholder="Starting Price" value={auction.starting_price} onChange={handleChange} />
+                </div>
 
-        // input name needs to match the key in the item object, we get the names from the api's docs, they need to match or they will get rejected by api, for example: 
-        
-        // <label htmlFor="starting_price">Starting Price</label>
-        // <input type="number" name="starting_price" placeholder="Starting Price" value={item.starting_price} onChange={handleChanges} />
+                <div>
+                    <label htmlFor="date_starting">Start Date: </label>
+                    <input type="date" name="date_starting" placeholder="Start Date" value={auction.date_starting} onChange={handleChange} />
+                </div>
 
+                <div>
+                    <label htmlFor="date_ending">End Date: </label>
+                    <input type="date" name="date_ending" placeholder="End Date" value={auction.date_ending} onChange={handleChange} />
+                </div>
 
+                <div>
+                    <label htmlFor="description">Description: </label>
+                    <input type="text" name="description" placeholder="Description" value={auction.description} onChange={handleChange} />
+                </div>
 
-        <form onSubmit={submitForm}>
-            <label> Add Item Form </label>
-            <input
-                id="name"
-                placeholder="Name of the item"
-                onChange={handleChanges}
-                name="fname"
-                value={item.title}
-            />
+                <div>
+                    <label htmlFor="image">Image URL</label>
+                    <input type="text" name="image" placeholder="Image URL" value={auction.image} onChange={handleChange} />
+                </div>
 
-            <label> Starting Price </label>
-            <input
-                id="startingPrice"
-                placeholder="100.00"
-                onChange={handleChanges}
-                name="startingPrice"
-                value={item.startingPrice}
-            />
+                <button type="submit">Add Auction</button>
+            </form>
+        </div>
 
-            <label> Date Starting </label>
-            <input
-                id="startingDate"
-                placeholder="01/01/2020"
-                onChange={handleChanges}
-                name="startingDate"
-                value={item.startingDate}
-            />
-
-            <label> Date Ending </label>
-            <input
-                id="endingDate"
-                placeholder="01/01/2020"
-                onChange={handleChanges}
-                name="endingDate"
-                value={item.endingDate}
-            />
-
-        <   label htmlFor="note">Description</label>
-            <textarea
-                id="note"
-                name="body"
-                onChange={handleChanges}
-                value={item.body}
-            />
-
-        </form>
     )
 }
 
@@ -103,4 +97,4 @@ const mapDispatchToProps = {
     addAuction
 }
 
-export default connect([], mapDispatchToProps)(AddAuction);
+export default connect(null, mapDispatchToProps)(AddAuction);

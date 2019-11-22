@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
+import useDate from '../Utils/useDate';
 
 const useStyles = makeStyles({
     wrapper: {
@@ -28,18 +29,24 @@ const useStyles = makeStyles({
     auctionWrapper: {
         display: 'flex',
         flexFlow: 'row wrap',
-        border: '1px solid black',
+        // borderBottom: '1px solid gray',
         padding: '20px',
         margin: '20px 0',
         width: '70%',
         '&:hover': {
             background: '#f2f2f2',
         }
+    },
+    borderDiv: {
+        background: 'lightgray',
+        height: '2px',
+        width: '50vw'
     }
 })
 
 const Auctions = (props) => {
     const classes = useStyles();
+    const date = useDate(props.date_ending)
     return (
         <div className={classes.wrapper}>
             <div className={classes.auctionWrapper}>
@@ -50,12 +57,13 @@ const Auctions = (props) => {
                     <div className={classes.texts}>
                         <h2>{props.name}</h2>
                         {/* <p>{props.description}</p> */}
-                        <span>Ending On: {props.date_ending}</span>
+                        <span>Ending On: {date}</span>
                         <p>Current Bid: {props.current_price} </p>
                         <p>Sold By: {props.seller} </p>
                     </div>
                 </Link>
             </div>
+            <div className={classes.borderDiv} />
         </div>
     )
 }
