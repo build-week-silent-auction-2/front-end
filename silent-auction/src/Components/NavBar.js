@@ -16,7 +16,7 @@ const useStyles = makeStyles({
         display: 'flex',
         flexFlow: 'row wrap',
         alignItems: 'center',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         zIndex: '3',
     },
     nav: {
@@ -62,6 +62,10 @@ const useStyles = makeStyles({
             color: 'white'
         }
     },
+    header: {
+        justifySelf: 'center',
+        alignSelf: 'flex-start'
+    }
 
 })
 
@@ -85,6 +89,7 @@ const NavBar = (props) => {
     } else {
         return (
             <div className={classes.wrapper} ref={node}>
+                <h2 className={classes.header}>Silent Auction</h2>
                     {/* hamburger menu */}
                 <button onClick={handleOpen}className="styledButton">
                     <div className={open ? "openFirstDiv" : "firstDiv"} />
