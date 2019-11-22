@@ -24,6 +24,33 @@ const useStyles = makeStyles({
         flexFlow: 'column wrap',
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: '50px',
+    },
+    img: {
+        width: '50%',
+    },
+    editButton: {
+        background: 'white',
+        border: '1px solid black',
+        fontSize: '1.2rem',
+        padding: '10px 15px',
+        margin: '0px 20px',
+        '&:hover': {
+            background: '#1D4062',
+            color: 'white',
+        }
+    },
+    deleteButton: {
+        background: 'white',
+        border: '1px solid red',
+        color: 'red',
+        fontSize: '1.2rem',
+        padding: '10px 15px',
+        margin: '0px 20px',
+        '&:hover': {
+            background: 'red',
+            color: 'white',
+        }
     }
 })
 
@@ -117,8 +144,8 @@ const Auction = (props) => {
             )}
             {props.user && props.user.role === "seller" && (
                 <div className={classes.buttonDiv}>
-                    <button onClick={handleEditAuction}>Edit </button>
-                    <button onClick={handleDeleteAuction}> Delete</button>
+                    <button className={classes.editButton} onClick={handleEditAuction}>Edit </button>
+                    <button className={classes.deleteButton} onClick={handleDeleteAuction}> Delete</button>
                 </div>
             )}
 
