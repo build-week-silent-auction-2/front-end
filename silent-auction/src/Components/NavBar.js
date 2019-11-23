@@ -11,7 +11,6 @@ const useStyles = makeStyles({
         maxHeight: '100px',
         color: 'white',
         position: 'relative',
-        marginBottom: '5%',
         width: '100%',
         display: 'flex',
         flexFlow: 'row wrap',

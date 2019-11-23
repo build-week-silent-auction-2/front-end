@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { fetchAuctionById, editAuction, deleteAuction } from '../Actions/auctionActions';
+import { fetchAuctionById, editAuction, } from '../Actions/auctionActions';
 import { fetchUser } from '../Actions/UserAction';
 import { addBid, deleteBid, editBid } from '../Actions/bidActions'
 import api from '../Utils/api';
 import useDate from '../Utils/useDate';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles({
     imgTag: {
-        width: '25%',
+        width: '70%',
     },
     wrapper: {
         display:'flex',
         flexFlow: 'column wrap',
-        fontSize: '1rem'
+        alignItems: 'center',
+        fontSize: '1.3rem'
     },
     auctionWrapper: {
         display: 'flex',
         flexFlow: 'row wrap',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     form: {
         display: 'flex',
@@ -32,27 +36,28 @@ const useStyles = makeStyles({
         width: '50%',
     },
     editButton: {
-        background: 'white',
-        border: '1px solid black',
+        background: '#1D4062',
+        border: '1px solid #1D4062',
         fontSize: '1.2rem',
         padding: '10px 15px',
-        margin: '0px 20px',
+        margin: '20px 20px',
+        color: 'white',
         '&:hover': {
-            background: '#1D4062',
-            color: 'white',
+            background: 'white',
+            color: 'black',
             cursor: 'pointer'
         }
     },
     deleteButton: {
-        background: 'white',
+        background: 'red',
         border: '1px solid red',
-        color: 'red',
+        color: 'white',
         fontSize: '1.2rem',
         padding: '10px 15px',
-        margin: '0px 20px',
+        margin: '20px 20px',
         '&:hover': {
-            background: 'red',
-            color: 'white',
+            background: 'white',
+            color: 'red',
             cursor: 'pointer'
         }
     },
@@ -60,6 +65,37 @@ const useStyles = makeStyles({
         padding: '10px 0',
         fontSize: '1rem',
         margin: '10px',
+    },
+    bidsButton: {
+        background: '#101434',
+        color: 'white',
+        border: '1px solid black',
+        padding: '5px 10px',
+        cursor: 'pointer',
+        borderRadius: '6px',
+        '&:hover': {
+            background: 'white',
+            color: 'black',
+            
+        }
+    },
+    texts: {
+        width: '50%',
+    },
+    link: {
+        alignSelf: 'flex-start',
+        textDecoration: 'none',
+        border: '1px solid black',
+        borderRadius: '5px',
+        padding: '3px 7px',
+        color: 'white',
+        background: 'rgb(13,42,70)',
+        margin: '20px',
+        '&:hover': {
+            background: 'lightgray',
+            color: 'rgb(13,42,70)'
+        }
+
     }
 })
 
@@ -77,6 +113,7 @@ const Auction = (props) => {
         description: '',
         image: ''
     });
+    const [showBids, setShowBids] = useState(false);
     
     const date = useDate(props.auction.date_ending);
     const [error, setError] = useState();
@@ -140,30 +177,39 @@ const Auction = (props) => {
 
     return (
         <div className={classes.wrapper}>
+            <Link to="/" className={classes.link}>Back</Link>
             {props.loading ? <div className="spinner" /> : (
-                <div className={classes.auctionWrapper}>
-                    <div className={classes.img}>
-                        <img className={classes.imgTag} src={props.auction.image} alt={props.auction.name} />
-                    </div>
-                    <div className={classes.texts}>
-                        <h2>{props.auction.name}</h2>
-                        <p>{props.auction.description}</p>
-                        <span>Ending On: {date}</span>
-                        <p>Starting Price: {props.auction.starting_price} </p>
-                        {props.user && props.user.role === "buyer" && (
-                            <div>
-                                <form onSubmit = { handleSubmit } >
-                                    <input className={classes.formInput}type = "number" placeholder = "Add Bid" value = {bid.price} onChange = { handleBid } />
-                                    <button className={classes.editButton}  type = "submit">New Bid</button>
-                                </form>
-                                <button className={classes.editButton} onClick = { handleEdit }>Edit Bid</button>
-                                <button className={classes.deleteButton} onClick = { handleDelete }>Delete Bid</button>
-                            </div>
-                        )}
-                        <p>Bids: </p>{props.auction.bids && props.auction.bids.map((cur, index) => {
-                            return <p key={index}>User: {cur.username} Bid: {cur.price}</p>
-                        })}
-                        <p>Sold By: {props.auction.seller} </p>
+                <div className={classes.auction}>
+                    <h2 className={classes.header}>{props.auction.name}</h2>
+                    <div className="auctionWrapper">
+                        <div className={classes.img}>
+                            <img className={classes.imgTag} src={props.auction.image} alt={props.auction.name} />
+                        </div>
+                        <div className={classes.texts}>
+                            <p>{props.auction.description}</p>
+                            <span>Ending On: {date}</span>
+                            <p>Starting Price: {props.auction.starting_price} </p>
+
+                            {/* if props.auction.bids, props.auction.bids[props.auction.bids.length -1]  should get last bid */}
+                            <p>Current Price: {props.auction.bids && props.auction.bids[props.auction.bids.length -1].price}</p>
+
+                            {props.user && props.user.role === "buyer" && (
+                                <div>
+                                    <form onSubmit = { handleSubmit } >
+                                        <input className={classes.formInput}type = "number" placeholder = "Add Bid" value = {bid.price} onChange = { handleBid } />
+                                        <button className={classes.editButton}  type = "submit">New Bid</button>
+                                    </form>
+                                    <button className={classes.editButton} onClick = { handleEdit }>Edit Bid</button>
+                                    <button className={classes.deleteButton} onClick = { handleDelete }>Delete Bid</button>
+                                </div>
+                            )}
+                            <button onClick={() => setShowBids(!showBids)} className={classes.bidsButton}>{showBids ? "Hide Bids" : "Show All Bids"}</button>
+                            {showBids && <p>Bids: </p>}
+                            {showBids && props.auction.bids && props.auction.bids.map((cur, index) => {
+                                return <p key={index}>User: {cur.username} Bid: {cur.price}</p>
+                            })}
+                            <p>Sold By: {props.auction.seller} </p>
+                        </div>
                     </div>
                 </div>
             )}
